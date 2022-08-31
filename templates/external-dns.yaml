@@ -98,9 +98,9 @@ resources: {}
 
 %{ if length(node_selector) != 0 ~}
 nodeSelector:
-  %{ for key,value in node_selector ~}
+%{ for key,value in node_selector ~}
   ${key}: ${value} 
-  %{ endfor ~}
+%{ endfor ~}
 %{ else  ~}
 nodeSelector: {}
 %{ endif ~}
