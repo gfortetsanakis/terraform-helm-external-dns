@@ -6,11 +6,9 @@ This module deploys an external dns service an an Amazon EKS cluster. The servic
 
 | Parameter                      | Type     | Description                                                                        |
 | ------------------------------ |--------- | ---------------------------------------------------------------------------------- |
-| namespace                      | Required | The kubernetes namespace at which the external dns chart will be deployed         |
+| namespace                      | Required | The kubernetes namespace at which the external dns chart will be deployed          |
+| eks_cluster_name               | Required | The name of the eks cluster at which the external dns chart will be installed      |
 | domain                         | Required | The domain of a new Route53 private hosted zone that will be created for the eks cluster |
-| vpc_id                         | Required | The id of the VPC at which the eks cluster has been installed                      |
-| openid_connect_provider_arn    | Required | The ARN of the OpenID connect provider of the eks cluster                          |
-| openid_connect_provider_url    | Required | The URL of the OpenID connect provider of the eks cluster                          |
 | node_selector                  | Optional | A map variable with nodeSelector labels applied when placing pods of the chart on the cluster |
 
 ## Module output parameters

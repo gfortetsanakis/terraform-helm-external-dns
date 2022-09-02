@@ -1,8 +1,16 @@
+data "aws_eks_cluster" "eks_cluster" {
+  name = var.eks_cluster_name
+}
+
+data "aws_iam_openid_connect_provider" "eks_cluster_oidc" {
+  url = data.aws_eks_cluster.eks_cluster.identity[0].oidc[0].issuer
+}
+
 resource "aws_route53_zone" "private_hosted_zone" {
   name = var.domain
 
   vpc {
-    vpc_id = var.vpc_id
+    vpc_id = local.vpc_id
   }
 }
 
@@ -15,12 +23,12 @@ resource "aws_iam_role" "external_dns_role" {
       {
         "Effect" : "Allow",
         "Principal" : {
-          "Federated" : "${var.openid_connect_provider_arn}"
+          "Federated" : "${local.openid_connect_provider_arn}"
         },
         "Action" : "sts:AssumeRoleWithWebIdentity",
         "Condition" : {
           "StringEquals" : {
-            "${var.openid_connect_provider_url}:sub" : "system:serviceaccount:${var.namespace}:external-dns"
+            "${local.openid_connect_provider_url}:sub" : "system:serviceaccount:${var.namespace}:external-dns"
           }
         }
       }
